@@ -33,9 +33,11 @@ void addPlayer(JSONObject player) {
 void removePlayer(String playerName)
 {
   JSONObject p;
+  
   for (int i = 0; i < activePlayer.size(); i++)
   {
     p = activePlayer.getJSONObject(i);
+    
     if (p.getString("username").equals(playerName))
     {
       activePlayer.remove(i);
@@ -52,25 +54,26 @@ void updateTime()
 
   fill(white);
   rect(0, height-h, width, h);
-  fill(green);
-  textSize(tSize*0.75);
+  
   //textFont(lib11);
+  textSize(tSize*0.75);
   textAlign(CENTER, CENTER);
+  fill(green);
+  
   text("Next update in "+ (updateTime - nTime) +" seconds.", width/2, height - h/2);
 }
 
 void displayUpdate() {
- if(resume == true)
-    rTime = 255;
+  if(resume == true) rTime = 255;
   
-  if(rTime > 0)
-    rTime -= 3;
+  if(rTime > 0) rTime -= 3;
   
   textSize(tSize*0.75);
-  fill(200, rTime);
   textAlign(RIGHT);
+  fill(200, rTime);
   //stroke(30);
   //line(0, h*3, width, h*3);
+  
   text("data updated", width - border * displayDensity, (border * 2) * displayDensity); 
   
 }
@@ -80,11 +83,13 @@ void displayTitle()
   textSize(tSize*0.75);
   textAlign(LEFT);
   fill(white);
+  
   text( activePlayer.size() +" DreamPi Online", border * displayDensity, (border * 2) * displayDensity);
-
+  
   textSize(tSize*0.75);
   textAlign(CENTER);
-  fill(#B7B7B7);
+  fill(gray);
+  
   //text("data by dreamcast.online/now/", width/2, height - 30 * displayDensity);
   //text("app by magnes-dc.tumblr.com", width/2, height - 40 * displayDensity);
 }

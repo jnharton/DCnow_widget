@@ -18,6 +18,7 @@ PFont lib15;
 color dark = #272932;
 color green = #226CE0;
 color light = #ADBAC6;
+color gray = #B7B7B7;
 color gameColor = #D5A021;
 color white = #EBEBEB;
 
@@ -170,8 +171,8 @@ void renderDisplay() {
       current_game = p.getString("current_game");
       
       /* player name */
-      display.textAlign(LEFT);
       display.textSize(tSize);
+      display.textAlign(LEFT);
       display.fill(green);
       
       //display.ellipse(13 * displayDensity, 37 * displayDensity + (line * (tSize + tSpace)), 5 * displayDensity, 5 * displayDensity);
@@ -179,8 +180,8 @@ void renderDisplay() {
       //display.line++;
       
       /* game */
-      display.textAlign(RIGHT);
       display.textSize(tSize*0.75);
+      display.textAlign(RIGHT);
       display.fill(gameColor);
       
       display.text(current_game, (width-border) * displayDensity, line * tSize);
@@ -224,8 +225,8 @@ void displayPlayers()
       current_game = p.getString("current_game");
       
       /* player name */
-      textAlign(LEFT);
       textSize(tSize);
+      textAlign(LEFT);
       fill(green);
       
       //ellipse(13 * displayDensity, 37 * displayDensity + (line * (tSize + tSpace)), 5 * displayDensity, 5 * displayDensity);
@@ -233,8 +234,8 @@ void displayPlayers()
       //line++;
       
       /* game */
-      textAlign(RIGHT);
       textSize(tSize*0.75);
+      textAlign(RIGHT);
       fill(gameColor);
       
       text(current_game, (width-border) * displayDensity, line * tSize);
