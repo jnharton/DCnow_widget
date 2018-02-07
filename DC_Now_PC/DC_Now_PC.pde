@@ -28,6 +28,8 @@ boolean resume = false;
 
 int displayDensity = 1;
 
+PGraphics display;
+
 void setup()
 {
   size(300, 400);
@@ -55,6 +57,8 @@ void setup()
   //get first data
   activePlayer = new JSONArray();
   getOnlinePlayers();
+  
+  display = createGraphics(300, 400);
 }
 
 void draw()
@@ -71,7 +75,11 @@ void draw()
   }
 
   displayUpdate();
-  displayPlayers();
+  //displayPlayers();
+  
+  renderDisplay();
+  image(display, 0, 0);
+  
   displayTitle(); 
   delay(10);
 }
@@ -131,6 +139,65 @@ void getOnlinePlayers()
   delay(10);
 }
 
+void renderDisplay() {
+  display.beginDraw();
+  
+  /*************************/
+  /** display players     **/
+  /*************************/
+  
+  int line = 3;
+  
+  display.stroke(30);
+  display.strokeWeight(5);
+  display.strokeCap(SQUARE);
+  
+  if (activePlayer.size() > 0)
+  {
+    String userName;
+    String current_game;
+    
+    for (int i = 0; i < activePlayer.size(); i++)
+    {
+      ////////////LINE///////////
+      PVector start = new PVector(border * displayDensity, line * tSize);
+      display.line(start.x, start.y, width - border, start.y);
+      
+      ////////////PLAYER/////////
+      JSONObject p = activePlayer.getJSONObject(i);
+      
+      userName = p.getString("username");
+      current_game = p.getString("current_game");
+      
+      /* player name */
+      display.textAlign(LEFT);
+      display.textSize(tSize);
+      display.fill(green);
+      
+      //display.ellipse(13 * displayDensity, 37 * displayDensity + (line * (tSize + tSpace)), 5 * displayDensity, 5 * displayDensity);
+      display.text(userName, border * displayDensity, line * tSize);
+      //display.line++;
+      
+      /* game */
+      display.textAlign(RIGHT);
+      display.textSize(tSize*0.75);
+      display.fill(gameColor);
+      
+      display.text(current_game, (width-border) * displayDensity, line * tSize);
+      
+      line++;
+    }
+  }
+  
+  display.noStroke();
+  
+  /*************************/
+  /** display ?           **/
+  /*************************/
+  
+  display.endDraw();
+}
+
 void displayPlayers()
 {
   int line = 3;
@@ -171,6 +238,7 @@ void displayPlayers()
       fill(gameColor);
       
       text(current_game, (width-border) * displayDensity, line * tSize);
+      
       line++;
     }
   }
