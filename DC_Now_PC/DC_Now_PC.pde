@@ -71,7 +71,7 @@ void draw()
   }
 
   displayUpdate();
-  displayPlayers2();
+  displayPlayers();
   displayTitle(); 
   delay(10);
 }
@@ -131,64 +131,49 @@ void getOnlinePlayers()
   delay(10);
 }
 
-void displayPlayers2()
-{
-  int line = 3;
-  stroke(30);
-  strokeWeight(5);
-  strokeCap(SQUARE);
-  if (activePlayer.size() > 0)
-  {
-    for (int i = 0; i < activePlayer.size(); i++)
-    {
-      ////////////LINE///////////
-      PVector start = new PVector(border * displayDensity, line * tSize);
-      line(start.x, start.y, width - border, start.y);
-      ////////////PLAYER//////////
-      JSONObject p = activePlayer.getJSONObject(i);
-      textAlign(LEFT);
-      textSize(tSize);
-      fill(green);
-      //ellipse(13 * displayDensity, 37 * displayDensity + (line * (tSize + tSpace)), 5 * displayDensity, 5 * displayDensity);
-      text(p.getString("current_game"), border * displayDensity, line * tSize);
-      //line++;
-      textSize(tSize*0.75);
-      textAlign(RIGHT);
-      fill(gameColor);
-      text(p.getString("username"), (width-border) * displayDensity, line * tSize);
-      line++;
-    }
-  }
-  noStroke();
-}
-
 void displayPlayers()
 {
   int line = 3;
+  
   stroke(30);
   strokeWeight(5);
   strokeCap(SQUARE);
+  
   if (activePlayer.size() > 0)
   {
+    String userName;
+    String current_game;
+    
     for (int i = 0; i < activePlayer.size(); i++)
     {
       ////////////LINE///////////
       PVector start = new PVector(border * displayDensity, line * tSize);
       line(start.x, start.y, width - border, start.y);
+      
       ////////////PLAYER/////////
       JSONObject p = activePlayer.getJSONObject(i);
+      
+      userName = p.getString("username");
+      current_game = p.getString("current_game");
+      
+      /* player name */
       textAlign(LEFT);
       textSize(tSize);
       fill(green);
+      
       //ellipse(13 * displayDensity, 37 * displayDensity + (line * (tSize + tSpace)), 5 * displayDensity, 5 * displayDensity);
-      text(p.getString("username"), border * displayDensity, line * tSize);
+      text(userName, border * displayDensity, line * tSize);
       //line++;
-      textSize(tSize*0.75);
+      
+      /* game */
       textAlign(RIGHT);
+      textSize(tSize*0.75);
       fill(gameColor);
-      text(p.getString("current_game"), (width-border) * displayDensity, line * tSize);
+      
+      text(current_game, (width-border) * displayDensity, line * tSize);
       line++;
     }
   }
+  
   noStroke();
 }

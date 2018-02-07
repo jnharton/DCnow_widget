@@ -2,18 +2,26 @@
 boolean checkPlayer(String playerName)
 {
   JSONObject p;
+  
+  boolean result = false;
+  
   for (int i = 0; i < activePlayer.size(); i++)
   {
     p = activePlayer.getJSONObject(i);
+    
     //println("Checking "+ playerName +" with "+ p.getString("username"));
     if (p.getString("username").equals(playerName))
     {
-      //println("FOUND A MATCH!");
-      return true;
+      result = true;
     }
+    
+    if( result ) break;
   }
-  //println("Found no match");
-  return false;
+  
+  //if( result ) println("FOUND A MATCH!");
+  //else         println("Found no match");
+  
+  return result;
 }
 
 //
