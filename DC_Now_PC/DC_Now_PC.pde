@@ -80,40 +80,52 @@ void draw()
 void getOnlinePlayers()
 {
   int cPlayer = 0;
+
   JSONObject p;
   JSONObject data;
+
   int totalUser;
+
+  String userName;
+  boolean online;
+  String current_game;
+
+  StringList gameList = new StringList();
 
   //disconnect.rewind();
   //connect.rewind();
   println("Refreshing players");
+
   data = loadJSONObject("http://dreamcast.online/now/api/users.json");
   totalUser = data.getInt("total_count");
   player = data.getJSONArray("users");
+
   for (int i = 0; i < totalUser; i++)
   {
     p = player.getJSONObject(i);
-    if (p.getBoolean("online") == true && !checkPlayer(p.getString("username")))
-    {
-      println("Adding : "+ p.getString("username"));
-      activePlayer.append(p);
-    }
-    if (p.getBoolean("online") == false && checkPlayer(p.getString("username")))
-    {
-      print("Removing : "+ p.getString("username"));
-      //disconnect.play();
-      removePlayer(p.getString("username"));
-    }
-  }
-  lastPlayerCount = activePlayer.size();
 
-  StringList gameList = new StringList();
-  for (int i = 0; i < lastPlayerCount; i++) {
-    p = player.getJSONObject(i);
-    if (!gameList.hasValue(p.getString("current_game")))
-      gameList.append(p.getString("current_game"));
+    userName = p.getString("username");
+    online = p.getBoolean("online");
+    current_game = p.getString("current_game");
+
+    if ( online ) {
+      if ( !checkPlayer( userName ) ) {
+        println("Adding : " + userName);
+        //connect.play();
+        addPlayer( p );
+      }
+      else {
+        if ( !gameList.hasValue(current_game) ) gameList.append(current_game);
+      }
+    }
+    else {
+      if ( checkPlayer( userName ) ) {
+        print("Removing : " + userName);
+        //disconnect.play();
+        removePlayer( userName );
+      }
+    }
   }
-   
 
   resume = false;
   delay(10);

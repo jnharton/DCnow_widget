@@ -16,6 +16,11 @@ boolean checkPlayer(String playerName)
   return false;
 }
 
+//
+void addPlayer(JSONObject player) {
+  activePlayer.append(player);
+}
+
 // return true if the player is active
 void removePlayer(String playerName)
 {
